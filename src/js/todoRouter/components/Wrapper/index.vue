@@ -3,8 +3,10 @@
     <div class="inner">
       <app-header />
       <main class="main">
+        <!-- navi,register,errorMessage -->
         <slot />
         <div class="todos">
+          <!-- List , Message(emptyMessage)を表示している  -->
           <slot name="todos" />
         </div>
       </main>

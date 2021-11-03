@@ -24,6 +24,7 @@
       v-if="errorMessage"
       :error-message="errorMessage"
     />
+    <!-- Wrapperのslotのtodosと置き換わる -->
     <template v-slot:todos>
       <app-list
         v-if="filteredTodos.length"
@@ -37,6 +38,7 @@
         :empty-message="emptyMessage"
       />
     </template>
+    <!-- /.v-slot todos -->
   </app-wrapper>
 </template>
 
