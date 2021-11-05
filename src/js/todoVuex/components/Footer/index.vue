@@ -1,4 +1,4 @@
-<template lang="html">
+  <template lang="html">
   <footer class="footer">
     <p>全項目数: {{ todos.length }}</p>
     <p>未完了: {{ incompleteTodosLength }}</p>
@@ -9,13 +9,13 @@
 <script>
 export default {
   computed: {
-    todos: function() {
+    todos() {
       return this.$store.state.todos;
     },
-    incompleteTodosLength: function() {
+    incompleteTodosLength() {
       return this.$store.getters.incompleteTodosLength;
     },
-    completedTodosLength: function() {
+    completedTodosLength() {
       return this.$store.getters.completedTodosLength;
     },
   },

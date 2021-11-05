@@ -22,8 +22,8 @@ const store = new Vuex.Store({
   },
   // getter:stateの一部やstateから返された値を保持する
   getters: {
-    completedTodos: (state) => state.todos.filter((todo) => todo.completed),
-    incompleteTodos: (state) => state.todos.filter((todo) => !todo.completed),
+    completedTodos: state => state.todos.filter(todo => todo.completed),
+    incompleteTodos: state => state.todos.filter(todo => !todo.completed),
     // 以下２つはfooter部分で使用している
     completedTodosLength: (state, getters) => getters.completedTodos.length,
     incompleteTodosLength: (state, getters) => getters.incompleteTodos.length,
@@ -162,17 +162,35 @@ const store = new Vuex.Store({
       });
       commit('initTargetTodo');
     },
+    // 通常のパターン
+    // deleteTodo({ commit }, todoId) {
+    //   axios.delete(`http://localhost:3000/api/todos/${todoId}`).then(({ data }) => {
+    //     // 処理
+    //     commit('getTodos', data.todos);
+    //     commit('hideError');
+    //   }).catch((err) => {
+    //     // 処理
+    //     commit('showError', err.response);
+    //   });
+    //   // 必要があれば処理
+    //   commit('initTargetTodo');
+    // },
+    // Promiseを使用したパターン
     deleteTodo({ commit }, todoId) {
-      axios.delete(`http://localhost:3000/api/todos/${todoId}`).then(({ data }) => {
-        // 処理
-        commit('getTodos', data.todos);
-        commit('hideError');
-      }).catch((err) => {
-        // 処理
-        commit('showError', err.response);
+      return new Promise((resolve) => {
+        axios.delete(`http://localhost:3000/api/todos/${todoId}`).then(() => {
+          // 処理
+          // ListItemで記述したthen以降の内容を実行することが出来る。
+          resolve();
+          commit('hideError');
+        }).catch((err) => {
+          // 処理
+          commit('showError', err.response);
+          // 今回はcatch()をListItemで記述していないので省略
+          // reject();
+        });
+        commit('initTargetTodo');
       });
-      // 必要があれば処理
-      commit('initTargetTodo');
     },
   },
 });

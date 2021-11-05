@@ -37,7 +37,7 @@
           削除
         </button>
       </div>
-    </div>  
+    </div>
   </li>
 </template>
 
@@ -46,21 +46,29 @@ export default {
   props: {
     todo: {
       type: Object,
-      default: function() {
+      default() {
         return {};
       },
     },
   },
   methods: {
-    changeCompleted: function(todo) {
+    changeCompleted(todo) {
       this.$store.dispatch('changeCompleted', todo);
     },
-    showEditor: function(todo) {
+    showEditor(todo) {
       this.$store.dispatch('showEditor', todo);
     },
     // actionsのdeleteTodoを呼び出して、第二引数に各todoのidを代入している
-    deleteTodo: function(todoId) {
-      this.$store.dispatch('deleteTodo', todoId);
+    // deleteTodo: function(todoId) {
+    //   this.$store.dispatch('deleteTodo', todoId);
+    // },
+    // Promiseを使用する場合
+    deleteTodo(todoId) {
+      this.$store.dispatch('deleteTodo', todoId).then(() => {
+        // thenの引数で指定したこの内容がresolveで実行される
+        // ここは常に非同期で実行される
+        this.$store.dispatch('getTodos');
+      });
     },
   },
 };
