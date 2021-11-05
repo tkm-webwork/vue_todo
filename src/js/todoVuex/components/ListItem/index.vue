@@ -28,14 +28,16 @@
         >
           編集
         </button>
+        <!-- クリックした場合の処理をここに追記 -->
         <button
           class="todo__item__btn__delete"
           type="button"
+          @click="deleteTodo(todo.id)"
         >
           削除
         </button>
       </div>
-    </div>
+    </div>  
   </li>
 </template>
 
@@ -55,6 +57,10 @@ export default {
     },
     showEditor: function(todo) {
       this.$store.dispatch('showEditor', todo);
+    },
+    // actionsのdeleteTodoを呼び出して、第二引数に各todoのidを代入している
+    deleteTodo: function(todoId) {
+      this.$store.dispatch('deleteTodo', todoId);
     },
   },
 };

@@ -3,8 +3,11 @@
 </template>
 
 <script>
+
 export default {
   computed: {
+    // store/index.js内のstateにあるemptyMessageを返している
+    // setEmptyMessageアクションを実行したときに、呼び出されたsetEmptyMessageミューテーションが実行され、stateであるemptyMessageが変更される。
     emptyMessage: function() {
       return this.$store.state.emptyMessage;
     },

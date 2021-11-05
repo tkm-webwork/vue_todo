@@ -1,10 +1,18 @@
 <template lang="html">
   <app-wrapper>
+    <!-- Naviコンポーネントの追加 -->
+    <app-navi />
     <app-register v-if="todoFilter !== 'completedTodos'" />
-    <app-error-message />
+    <!-- errorMessageがある場合は表示 -->
+    <app-error-message 
+      v-if="errorMessage" 
+    />
     <template v-slot:todos>
       <app-list v-if="todos.length" :todos="todos" />
-      <app-empty-message />
+      <!-- todosに値がない場合は以下を実行 -->
+      <app-empty-message 
+        v-else
+      />
     </template>
   </app-wrapper>
 </template>
@@ -14,6 +22,8 @@ import Wrapper from 'TodoVuexDir/components/Wrapper';
 import { ErrorMessage, EmptyMessage } from 'TodoVuexDir/components/Message';
 import Register from 'TodoVuexDir/components/Register';
 import List from 'TodoVuexDir/components/List';
+// Naviコンポーネントをインポート
+import Navi from 'TodoVuexDir/components/Navi';
 
 export default {
   components: {
@@ -22,6 +32,7 @@ export default {
     appEmptyMessage: EmptyMessage,
     appList: List,
     appRegister: Register,
+    appNavi: Navi, //追記
   },
   computed: {
     todoFilter: function() {
@@ -31,6 +42,7 @@ export default {
       if (this.todoFilter === 'allTodos') {
         return this.$store.state.todos;
       }
+      // ここがよくわからない
       return this.$store.getters[this.todoFilter];
     },
     errorMessage: function() {
